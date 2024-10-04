@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, Request, Form, status
 
-from starlette.response import RedirectResponse
-from starlette.templating import Jinja2Templates
+from fastapi.responses import RedirectResponse
+from fastapi.templating import Jinja2Templates
 
 from sqlalchemy.orm import Session
 from database import SessionLocal, engine
@@ -35,7 +35,7 @@ def add(req: Request, title: str = Form(...), db: Session = Depends(get_db)):
     new_todo = models.Todo(title=title)
     db.add(new_todo)
     db.commit()
-    url = app.url_path_for("hoome")
+    url = app.url_path_for("home")
     return RedirectResponse(url=url, status_code=status.HTTP_303_SEE_OTHER)
 
 
